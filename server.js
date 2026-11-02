@@ -6,6 +6,17 @@ const PORT = process.env.PORT || 8080;
 // Middleware para parsing de JSON
 app.use(express.json());
 
+// Middleware CORS: Deshabilita restricciones para que cualquier origen/cliente pueda consultar
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 /**
  * Estructura del Modelo de Datos (Product / Item):
  * ------------------------------------------------
